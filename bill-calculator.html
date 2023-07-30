@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4CAF50;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            font-size: larger;
+            color: white;
+            cursor: pointer;
+            box-shadow: dark;
+        }
+    </style>
+</head>
+<body>
+    <table id="tab" class="table table-bordered">
+        <tr>
+            <th colspan="3" class="text-center"><h3>Bill Calculator</h3></th>
+        </tr>
+        <tr>
+            <td colspan="2"><strong>Bill Amount: </strong></td>
+            <td><input type="text" id="bamt" placeholder="Enter Amount" tabindex="1" onkeyup="cal()"></td>
+        </tr>
+        <tr>
+            <td><strong>CGST@: </strong></td>
+            <td><input type="text" id="cgst" placeholder="Enter CGPA %" tabindex="2" onkeyup="cal()"></td>
+            <td><input type="text" id="cgstcal"></td>
+        </tr>
+        <tr>
+            <td><strong>SGST@: </strong></td>
+            <td><input type="text" id="sgst" placeholder="Enter SGPA %" tabindex="3" onkeyup="cal()"></td>
+            <td><input type="text" id="sgstcal"></td>
+        </tr>    
+        <tr>
+            <td><strong>Discount: </strong></td>
+            <td><input type="text" id="disc" placeholder="Enter Discount" tabindex="4" onkeyup="cal()"></td>
+            <td><input type="text" id="discal"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><strong>Round Off: </strong></td>
+            <td><input type="text" id="round"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><strong>Total: </strong></td>
+            <td><input type="text" id="total"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><button onclick="window.print()">Print</button></td>
+        </tr>
+    </table>
+</body>
+
+<script>
+    document.getElementById("bamt").focus()
+    function cal() {
+        var bilamt = document.getElementById("bamt").value
+        var cgst = document.getElementById("cgst").value
+        var sgst = document.getElementById("sgst").value
+        var dis = document.getElementById("disc").value
+        var cgstcal = (parseFloat(bilamt) / 100) * parseFloat(cgst)
+        var sgstcal = (parseFloat(bilamt) / 100) * parseFloat(sgst)
+        var disc = (parseFloat(bilamt) / 100) * parseFloat(dis)
+        var total = parseFloat(bilamt) + parseFloat(cgstcal) + parseFloat(sgstcal) - parseFloat(disc)
+        document.getElementById("cgstcal").value = cgstcal.toFixed(2)
+        document.getElementById("sgstcal").value = sgstcal.toFixed(2)
+        document.getElementById("discal").value = disc.toFixed(2)
+        document.getElementById("round").value = (total - Math.round(total)).toFixed(2)*-1
+        document.getElementById("total").value = Math.round(total)
+    }
+</script>
+</html>
